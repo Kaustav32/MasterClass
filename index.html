@@ -86,6 +86,22 @@
             text-align: center;
         }
 
+        /* THE "VERCEL" SHIMMER TEXT EFFECT */
+        .shimmer-text {
+            background: linear-gradient(to right, #8b5cf6 20%, #3b82f6 40%, #ec4899 60%, #8b5cf6 80%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: text-shimmer 3s linear infinite;
+        }
+
+        @keyframes text-shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
         /* --- 3. COMPONENTS --- */
         .container {
             max-width: 1200px;
@@ -123,37 +139,35 @@
             transform: translateY(-2px);
         }
 
-        /* CREATIVE NAV BUTTON (Pulse + Glow) */
+        /* CREATIVE NAV BUTTON (Rainbow Border) */
         .btn-nav {
             padding: 8px 16px;
             font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 50px;
-            animation: soft-pulse 3s infinite;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
         }
 
-        .btn-nav i {
-            color: #25D366;
+        /* Gradient Border Hack */
+        .btn-nav::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 50px;
+            padding: 1px;
+            background: linear-gradient(45deg, #8b5cf6, #3b82f6, #ec4899);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
-        /* WhatsApp Green Icon */
-
-        @keyframes soft-pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-            }
-        }
-
-        /* WHATSAPP CTA */
         .btn-whatsapp {
             background: rgba(37, 211, 102, 0.1);
             border-color: rgba(37, 211, 102, 0.4);
@@ -161,7 +175,7 @@
             box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
         }
 
-        /* --- 4. NAV --- */
+        /* --- 4. NAV (With Rainbow Bottom Border) --- */
         nav {
             padding: 15px 0;
             position: sticky;
@@ -169,7 +183,33 @@
             z-index: 100;
             background: rgba(10, 10, 10, 0.9);
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--glass-border);
+            /* The Rainbow Border */
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, #8b5cf6, #3b82f6, #ec4899, #8b5cf6) 1;
+            animation: border-flow 4s linear infinite;
+        }
+
+        /* Animation for Nav Border */
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6, #ec4899, #8b5cf6);
+            background-size: 300% 100%;
+            animation: rainbow-move 3s linear infinite;
+        }
+
+        @keyframes rainbow-move {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
         .nav-flex {
@@ -186,17 +226,12 @@
             line-height: 1.1;
         }
 
-        .logo span {
-            display: inline-block;
-        }
-
         /* --- 5. HERO SECTION --- */
         .hero {
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            /* OPTIMIZED PADDING */
             padding-top: 30px;
             padding-bottom: 40px;
             overflow: hidden;
@@ -210,7 +245,6 @@
             height: 100%;
             background: url('hero-cinema.jpg') center/cover no-repeat;
             opacity: 0.5;
-            filter: blur(0px);
             z-index: 0;
         }
 
@@ -250,7 +284,6 @@
             font-size: 1rem;
         }
 
-        /* Hero Mobile CTA Layout */
         .hero-actions {
             display: flex;
             align-items: center;
@@ -282,7 +315,6 @@
             border-top: 1px solid var(--glass-border);
         }
 
-        /* Desktop Grid */
         .learn-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -298,24 +330,13 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            /* 3D removed for mobile performance, added back for desktop hover */
         }
 
-        /* Active State (Mobile Scroll Glow) */
         .active-card {
             border-color: var(--accent) !important;
             background: var(--surface-hover) !important;
             box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
             transform: scale(1.02);
-        }
-
-        @media (min-width: 900px) {
-            .learn-card:hover {
-                transform: translateY(-5px);
-                background: var(--surface-hover);
-                border-color: var(--accent);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            }
         }
 
         .icon-box {
@@ -372,7 +393,6 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
-            transition: 0.3s ease;
         }
 
         .review-header {
@@ -488,7 +508,7 @@
         }
 
         /* =========================================
-           📱 MOBILE OPTIMIZATIONS (The Fixes)
+           MOBILE OPTIMIZATIONS
            ========================================= */
         @media (max-width: 1100px) {
             .learn-grid {
@@ -498,7 +518,6 @@
 
         @media (max-width: 900px) {
 
-            /* GLOBAL PADDING REDUCTION */
             .hero,
             .section-learn,
             .section-reviews,
@@ -512,14 +531,12 @@
                 margin-bottom: 10px;
             }
 
-            /* HERO FIXES */
             .hero {
                 padding-top: 80px;
                 display: block;
                 height: auto;
             }
 
-            /* No gap above date */
             .hero-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -535,7 +552,6 @@
                 margin-top: 25px;
             }
 
-            /* BUTTON SIDE-BY-SIDE FIX */
             .hero-actions {
                 flex-wrap: nowrap;
                 gap: 10px;
@@ -552,7 +568,6 @@
                 font-size: 0.8rem;
             }
 
-            /* CAROUSEL "PEEK" LOGIC */
             .learn-grid,
             .reviews-grid {
                 display: flex;
@@ -560,23 +575,18 @@
                 scroll-snap-type: x mandatory;
                 gap: 15px;
                 padding-bottom: 25px;
-                /* Space for shadow */
                 margin-top: 20px;
-                /* PEEK: Padding right ensures next card is hinted */
                 padding-right: 20px;
                 align-items: stretch;
-                /* Equal height reviews */
             }
 
             .learn-card,
             .review-card {
                 min-width: 85vw;
-                /* 85% width lets 15% of next card show */
                 scroll-snap-align: center;
                 margin: 0;
             }
 
-            /* MENTOR FIXES */
             .mentor-grid {
                 grid-template-columns: 1fr;
                 gap: 25px;
@@ -591,7 +601,19 @@
                 height: 350px;
             }
 
-            /* Hide scrollbars */
+            .mentor-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-thumb {
+                filter: grayscale(100%);
+            }
+
+            .mobile-active-img {
+                filter: grayscale(0%) !important;
+                border-color: var(--accent);
+            }
+
             .learn-grid::-webkit-scrollbar,
             .reviews-grid::-webkit-scrollbar {
                 display: none;
@@ -607,7 +629,7 @@
     <nav>
         <div class="container nav-flex">
             <div class="logo">MASTERCLASS <span class="text-accent">BY NICK</span></div>
-            <a href="https://wa.me/918130853930" class="btn btn-nav">
+            <a href="https://wa.me/918130853930" class="btn-nav">
                 <i class="fab fa-whatsapp" style="margin-right:5px;"></i> Talk to Nick
             </a>
         </div>
@@ -620,7 +642,7 @@
         <div class="container hero-grid">
             <div class="hero-content">
                 <div class="hero-tag">JAN 18 • 6-HOUR INTENSIVE</div>
-                <h1>SHOOT & EDIT<br><span class="text-accent">SCROLL STOPPERS</span></h1>
+                <h1>SHOOT & EDIT<br><span class="shimmer-text">SCROLL STOPPERS</span></h1>
 
                 <p class="hero-desc">
                     A 1-day live & intensive masterclass. Learn how to create high-end, professional content using just
@@ -703,7 +725,6 @@
             <h2 class="text-center">CLIENT LOVE</h2>
 
             <div class="reviews-grid" id="reviewScroll">
-
                 <div class="review-card">
                     <div class="review-header">
                         <strong>Jasvin Kaur</strong>
@@ -819,10 +840,9 @@
         else { window.onbeforeunload = function () { window.scrollTo(0, 0); } }
         window.onload = function () { window.scrollTo(0, 0); };
 
-        // MOBILE AUTO-GLOW OBSERVER
+        // MOBILE AUTO-GLOW
         if (window.matchMedia("(max-width: 900px)").matches) {
 
-            // 1. Gallery Glow
             const galleryItems = document.querySelectorAll('.gallery-thumb');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -831,13 +851,12 @@
             }, { threshold: 0.6, rootMargin: "-10% 0px -10% 0px" });
             galleryItems.forEach(item => observer.observe(item));
 
-            // 2. Blueprint & Reviews Glow
             const cards = document.querySelectorAll('.learn-card, .review-card');
             const cardObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     entry.target.classList.toggle('active-card', entry.isIntersecting);
                 });
-            }, { threshold: 0.7, rootMargin: "0px -20% 0px -20%" }); // Triggers when card is center screen
+            }, { threshold: 0.7, rootMargin: "0px -20% 0px -20%" });
             cards.forEach(card => cardObserver.observe(card));
         }
     </script>
