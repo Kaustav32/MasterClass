@@ -91,7 +91,6 @@
             text-align: center;
         }
 
-        /* SHIMMER TEXT EFFECT */
         .shimmer-text {
             background: linear-gradient(to right, #8b5cf6 20%, #3b82f6 40%, #ec4899 60%, #8b5cf6 80%);
             background-size: 200% auto;
@@ -140,7 +139,7 @@
             z-index: 2;
         }
 
-        /* MAGNET BUTTON (GLOW) */
+        /* MAGNET BUTTON */
         .btn-magnet {
             display: inline-flex;
             align-items: center;
@@ -262,7 +261,7 @@
             display: flex;
             align-items: center;
             padding-top: 30px;
-            padding-bottom: 40px;
+            padding-bottom: 60px;
             overflow: hidden;
         }
 
@@ -338,9 +337,9 @@
             height: 100%;
         }
 
-        /* --- 7. BLUEPRINT (WITH 3D HOVER) --- */
+        /* --- 7. BLUEPRINT --- */
         .section-learn {
-            padding: 40px 0 60px 0;
+            padding: 60px 0;
             border-top: 1px solid var(--glass-border);
         }
 
@@ -372,7 +371,6 @@
             }
         }
 
-        /* MOBILE SCROLL ACTIVE STATE */
         .active-card {
             border-color: var(--accent) !important;
             background: var(--surface-hover) !important;
@@ -410,7 +408,7 @@
 
         /* --- 8. REVIEWS --- */
         .section-reviews {
-            padding: 40px 0 60px 0;
+            padding: 60px 0;
             background: linear-gradient(to bottom, #0a0a0a, #0f0f0f);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
@@ -474,7 +472,7 @@
 
         /* --- 9. MENTOR & GALLERY --- */
         .section-mentor {
-            padding: 40px 0;
+            padding: 60px 0;
             background: #080808;
             border-top: 1px solid var(--glass-border);
         }
@@ -566,7 +564,7 @@
         }
 
         /* =========================================
-           MOBILE OPTIMIZATIONS (FIXED GAP)
+           MOBILE OPTIMIZATIONS (FIXED PADDING)
            ========================================= */
         @media (max-width: 1100px) {
             .learn-grid {
@@ -575,31 +573,19 @@
         }
 
         @media (max-width: 900px) {
-
-            /* GLOBAL PADDING */
-            .hero,
-            .section-learn,
-            .section-reviews,
-            .section-mentor,
-            footer {
-                padding: 30px 0;
-            }
-
             h1 {
                 font-size: 11vw;
                 margin-bottom: 5px;
             }
 
-            /* HERO GAP FIX */
+            /* HERO RESTORED PADDING */
             .hero {
                 padding-top: 60px;
-                /* Reduced from 80px */
-                padding-bottom: 0px;
-                /* REMOVED bottom padding entirely */
+                padding-bottom: 60px;
+                /* Restored breathing room */
                 display: block;
                 height: auto;
                 min-height: unset;
-                /* CRITICAL: Allows hero to collapse */
             }
 
             .hero-grid {
@@ -612,17 +598,20 @@
                 opacity: 0.5;
             }
 
-            /* REDUCED VIDEO MARGINS */
             .video-box {
                 width: 100%;
                 margin-top: 20px;
                 margin-bottom: 0;
             }
 
-            /* REDUCED BLUEPRINT TOP PADDING */
-            .section-learn {
-                padding-top: 20px;
-                border-top: none;
+            /* RESTORED SEPARATORS */
+            .section-learn,
+            .section-reviews,
+            .section-mentor,
+            footer {
+                padding: 60px 0;
+                border-top: 1px solid var(--glass-border);
+                /* Visible divider */
             }
 
             .hero-actions {
@@ -641,7 +630,6 @@
                 font-size: 0.8rem;
             }
 
-            /* VERTICAL PLAY FIX (overflow-y hidden) */
             .learn-grid,
             .reviews-grid {
                 display: flex;
@@ -653,7 +641,6 @@
                 padding-right: 20px;
                 align-items: stretch;
                 overflow-y: hidden;
-                /* FIXES WOBBLE */
             }
 
             .learn-card,
@@ -930,7 +917,7 @@
 
         document.querySelectorAll('.reveal-up').forEach((el) => revealObserver.observe(el));
 
-        // 2. MOBILE CARD GLOW
+        // 2. MOBILE CARD GLOW & GALLERY COLOR
         if (window.matchMedia("(max-width: 900px)").matches) {
 
             const galleryItems = document.querySelectorAll('.gallery-thumb');
