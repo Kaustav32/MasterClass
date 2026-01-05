@@ -181,21 +181,25 @@
             }
         }
 
-        /* NAV BUTTON */
+        /* NAV BUTTON (TIGHTER GAP FIX) */
         .btn-nav {
-            padding: 10px 24px;
-            font-size: 0.75rem;
+            padding: 8px 16px;
+            font-size: 0.7rem;
+            /* Smaller padding & font */
             background: rgba(139, 92, 246, 0.15);
             border: 1px solid rgba(139, 92, 246, 0.3);
             border-radius: 50px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
+            /* Reduced gap */
             color: white;
             text-decoration: none;
             font-weight: 700;
             text-transform: uppercase;
             transition: 0.3s;
+            white-space: nowrap;
+            /* Prevents text wrap */
         }
 
         .btn-nav:hover {
@@ -243,6 +247,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
         .logo {
@@ -354,7 +359,6 @@
             border: 1px solid var(--glass-border);
             padding: 25px;
             border-radius: 12px;
-            /* 3D Properties */
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
@@ -362,7 +366,6 @@
             perspective: 1000px;
         }
 
-        /* DESKTOP HOVER ANIMATION (The fix) */
         @media (min-width: 900px) {
             .learn-card:hover {
                 transform: translateY(-10px) rotateX(5deg);
@@ -408,7 +411,7 @@
             line-height: 1.4;
         }
 
-        /* --- 8. REVIEWS (HOVER EFFECTS) --- */
+        /* --- 8. REVIEWS --- */
         .section-reviews {
             padding: 40px 0 60px 0;
             background: linear-gradient(to bottom, #0a0a0a, #0f0f0f);
@@ -437,7 +440,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Review Hover Effect */
         @media (min-width: 900px) {
             .review-card:hover {
                 transform: translateY(-5px);
@@ -473,7 +475,7 @@
             line-height: 1.5;
         }
 
-        /* --- 9. MENTOR & GALLERY (B&W TO COLOR) --- */
+        /* --- 9. MENTOR & GALLERY --- */
         .section-mentor {
             padding: 40px 0;
             background: #080808;
@@ -507,14 +509,12 @@
             margin-top: 30px;
         }
 
-        /* Gallery Hover Logic */
         .gallery-thumb {
             width: 100%;
             height: 150px;
             object-fit: cover;
             border-radius: 8px;
             border: 1px solid var(--glass-border);
-            /* Default: Grayscale */
             filter: grayscale(100%);
             transition: all 0.4s ease;
             cursor: pointer;
@@ -569,7 +569,7 @@
         }
 
         /* =========================================
-           MOBILE OPTIMIZATIONS
+           MOBILE OPTIMIZATIONS (The Fixes)
            ========================================= */
         @media (max-width: 1100px) {
             .learn-grid {
@@ -579,6 +579,7 @@
 
         @media (max-width: 900px) {
 
+            /* GLOBAL PADDING */
             .hero,
             .section-learn,
             .section-reviews,
@@ -592,12 +593,14 @@
                 margin-bottom: 5px;
             }
 
+            /* HERO TIGHTNESS */
             .hero {
-                padding-top: 80px;
+                padding-top: 60px;
                 display: block;
                 height: auto;
             }
 
+            /* Less top pad */
             .hero-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -608,9 +611,11 @@
                 opacity: 0.5;
             }
 
+            /* Reduced Gap Below Video */
             .video-box {
                 width: 100%;
-                margin-top: 25px;
+                margin-top: 20px;
+                margin-bottom: 0px;
             }
 
             .hero-actions {
@@ -629,6 +634,7 @@
                 font-size: 0.8rem;
             }
 
+            /* SCROLL FIXES (No Vertical Wiggle) */
             .learn-grid,
             .reviews-grid {
                 display: flex;
@@ -639,6 +645,8 @@
                 margin-top: 20px;
                 padding-right: 20px;
                 align-items: stretch;
+                overflow-y: hidden;
+                /* Stops vertical play */
             }
 
             .learn-card,
@@ -666,7 +674,6 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            /* Mobile Gallery Behavior: Auto-Color on Scroll (No Hover needed) */
             .gallery-thumb {
                 filter: grayscale(100%);
             }
@@ -692,7 +699,7 @@
         <div class="container nav-flex">
             <div class="logo">MASTERCLASS <span class="text-accent">BY NICK</span></div>
             <a href="https://wa.me/918130853930" class="btn-nav">
-                RESERVE YOUR SEAT NOW <i class="fas fa-arrow-right" style="margin-left:5px; font-size:0.7em;"></i>
+                RESERVE YOUR SEAT NOW <i class="fas fa-arrow-right" style="font-size:0.8em;"></i>
             </a>
         </div>
     </nav>
@@ -703,7 +710,7 @@
 
         <div class="container hero-grid">
             <div class="hero-content">
-                <div class="hero-tag reveal-up">JAN 18 • 6-HOUR INTENSIVE</div>
+                <div class="hero-tag reveal-up">JAN 17 • 6-HOUR INTENSIVE</div>
 
                 <h1 class="reveal-up delay-100">IPHONE REEL<br>MASTERCLASS</h1>
                 <div class="sub-heading shimmer-text reveal-up delay-200">SHOOT & EDIT SCROLL STOPPERS</div>
@@ -919,7 +926,6 @@
         // 2. MOBILE CARD GLOW & GALLERY COLOR
         if (window.matchMedia("(max-width: 900px)").matches) {
 
-            // For Gallery Images
             const galleryItems = document.querySelectorAll('.gallery-thumb');
             const galleryObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -928,7 +934,6 @@
             }, { threshold: 0.6, rootMargin: "-10% 0px -10% 0px" });
             galleryItems.forEach(item => galleryObserver.observe(item));
 
-            // For Cards (Blueprint/Reviews)
             const cards = document.querySelectorAll('.learn-card, .review-card');
             const cardObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
