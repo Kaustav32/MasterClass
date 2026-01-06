@@ -25,6 +25,13 @@
             --backdrop-blur: 20px;
         }
 
+        /* HIDE DEFAULT CURSOR ON DESKTOP */
+        @media (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -41,6 +48,53 @@
             overflow-x: hidden;
         }
 
+        /* --- PREMIUM LIQUID CURSOR --- */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(2px);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+
+            .cursor-dot,
+            .cursor-outline {
+                display: none;
+            }
+
+            * {
+                cursor: auto !important;
+            }
+        }
+
+        /* --- FILM NOISE TEXTURE --- */
         .texture-overlay {
             position: fixed;
             top: 0;
@@ -49,10 +103,21 @@
             height: 100%;
             background-image: url('film-noise.jpg');
             background-repeat: repeat;
-            opacity: 0.07;
+            opacity: 0.12;
             pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: overlay;
+            z-index: 9998;
+            mix-blend-mode: normal;
+            animation: grain-dance 0.5s steps(4) infinite;
+        }
+
+        @keyframes grain-dance {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 100px 100px;
+            }
         }
 
         /* --- 2. TYPOGRAPHY --- */
@@ -470,7 +535,7 @@
             line-height: 1.5;
         }
 
-        /* --- 9. MENTOR & GALLERY --- */
+        /* --- 9. MENTOR & GALLERY (FIXED FRAMING) --- */
         .section-mentor {
             padding: 60px 0;
             background: #080808;
@@ -500,8 +565,9 @@
         .mentor-gallery {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 15px;
             margin-top: 30px;
+            align-items: flex-start;
         }
 
         .gallery-thumb {
@@ -515,9 +581,38 @@
             cursor: pointer;
         }
 
-        .gallery-thumb:hover {
+        /* 1 & 3: ZOOMED OUT & HEADS FIXED (Top Center) */
+        .mentor-gallery img:nth-child(1),
+        .mentor-gallery img:nth-child(3) {
+            transform: translateY(30px);
+            object-position: center 20%;
+
+            /* transform: scale(0.95);
+            object-position: top center; */
+            /* Fix for heads cut off */
+        }
+
+        /* 2 & 4: LOWERED (Offset Down & Frame Adjust) */
+        .mentor-gallery img:nth-child(2),
+        .mentor-gallery img:nth-child(4) {
+            transform: translateY(30px);
+            object-position: center 35%;
+            /* Nudges internal image down */
+        }
+
+        /* Hover Logic */
+        .mentor-gallery img:nth-child(1):hover,
+        .mentor-gallery img:nth-child(3):hover {
+            transform: scale(1.0);
             filter: grayscale(0%);
-            transform: scale(1.05);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .mentor-gallery img:nth-child(2):hover,
+        .mentor-gallery img:nth-child(4):hover {
+            transform: translateY(30px) scale(1.05);
+            filter: grayscale(0%);
             border-color: var(--accent);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
@@ -564,7 +659,7 @@
         }
 
         /* =========================================
-           MOBILE OPTIMIZATIONS (FIXED PADDING)
+           MOBILE OPTIMIZATIONS
            ========================================= */
         @media (max-width: 1100px) {
             .learn-grid {
@@ -578,11 +673,9 @@
                 margin-bottom: 5px;
             }
 
-            /* HERO RESTORED PADDING */
             .hero {
                 padding-top: 60px;
                 padding-bottom: 60px;
-                /* Restored breathing room */
                 display: block;
                 height: auto;
                 min-height: unset;
@@ -604,14 +697,12 @@
                 margin-bottom: 0;
             }
 
-            /* RESTORED SEPARATORS */
             .section-learn,
             .section-reviews,
             .section-mentor,
             footer {
                 padding: 60px 0;
                 border-top: 1px solid var(--glass-border);
-                /* Visible divider */
             }
 
             .hero-actions {
@@ -664,8 +755,13 @@
                 height: 350px;
             }
 
+            /* Mobile Gallery Reset */
             .mentor-gallery {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .mentor-gallery img:nth-child(n) {
+                transform: none !important;
             }
 
             .gallery-thumb {
@@ -686,6 +782,9 @@
 </head>
 
 <body>
+
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
 
     <div class="texture-overlay"></div>
 
@@ -906,7 +1005,24 @@
         else { window.onbeforeunload = function () { window.scrollTo(0, 0); } }
         window.onload = function () { window.scrollTo(0, 0); };
 
-        // 1. REVEAL ANIMATIONS
+        // CURSOR LOGIC
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+
+        window.addEventListener('mousemove', function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        document.querySelectorAll('a, button, .gallery-thumb, .learn-card, .review-card').forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+        });
+
+        // REVEAL ANIMATIONS
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -914,12 +1030,10 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal-up').forEach((el) => revealObserver.observe(el));
 
-        // 2. MOBILE CARD GLOW
+        // MOBILE FEATURES
         if (window.matchMedia("(max-width: 900px)").matches) {
-
             const galleryItems = document.querySelectorAll('.gallery-thumb');
             const galleryObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
