@@ -535,7 +535,7 @@
             line-height: 1.5;
         }
 
-        /* --- 9. MENTOR & GALLERY (INTELLIGENT COMPACT STAGGER) --- */
+        /* --- 9. MENTOR & GALLERY (MASONRY FIX - COLUMNS) --- */
         .section-mentor {
             padding: 60px 0;
             background: #080808;
@@ -562,19 +562,17 @@
             filter: grayscale(20%);
         }
 
-        /* THE CONTAINER */
+        /* THE CONTAINER - USING CSS COLUMNS */
         .mentor-gallery {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 30px;
-            /* INTELLIGENT SIZING: This forces the grid to be narrower */
-            /* This makes the images smaller naturally without cropping */
+            /* This property forces items to fill vertical columns like a newspaper */
+            column-count: 2;
+            column-gap: 15px;
+            /* Perfect horizontal gap */
             max-width: 70%;
-            align-items: start;
+            margin-top: 30px;
         }
 
-        /* THE CARD (SHRINK WRAP) */
+        /* CARD STYLE */
         .gallery-card {
             border-radius: 8px;
             overflow: hidden;
@@ -582,21 +580,44 @@
             position: relative;
             background: #000;
             transition: all 0.4s ease;
-            /* Box size = Image size (No gaps) */
             line-height: 0;
+
+            /* KEY: Prevents items from being split between columns */
+            break-inside: avoid;
+
+            /* KEY: Vertical Gap is handled by margin-bottom in Column Layout */
+            margin-bottom: 15px;
         }
 
-        /* CREATIVE STAGGER: Right column drops down */
-        .gallery-card:nth-child(even) {
+        /* STAGGER LOGIC FOR COLUMNS */
+        /* In Column Layout: Item 1 = Top Left, Item 2 = Bottom Left */
+        /* Item 3 = Top Right, Item 4 = Bottom Right */
+
+        /* 1. Left Column (Standard) */
+        .gallery-card:nth-child(1) {
+            margin-bottom: 15px;
+        }
+
+        .gallery-card:nth-child(2) {
+            margin-bottom: 0;
+        }
+
+        /* 2. Right Column (Staggered) */
+        .gallery-card:nth-child(3) {
             margin-top: 50px;
-            /* Strong vertical stagger */
+            /* This pushes the entire Right Column down */
+            margin-bottom: 15px;
         }
 
-        /* THE IMAGE (FULL & NATURAL) */
+        .gallery-card:nth-child(4) {
+            margin-bottom: 0;
+        }
+
+
+        /* THE IMAGE */
         .gallery-card img {
             width: 100%;
             height: auto;
-            /* MAINTAIN ORIGINAL RATIO */
             display: block;
             filter: grayscale(100%);
             transition: 0.5s ease;
@@ -752,17 +773,19 @@
                 height: 350px;
             }
 
-            /* MOBILE GALLERY */
+            /* MOBILE GALLERY - KEEP COLUMNS BUT MAX WIDTH */
             .mentor-gallery {
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                /* Allow slightly wider on mobile to see details */
                 max-width: 100%;
+                column-gap: 10px;
             }
 
-            .gallery-card:nth-child(even) {
+            /* Reduce stagger on mobile */
+            .gallery-card:nth-child(3) {
                 margin-top: 30px;
-                /* Keep stagger on mobile */
+            }
+
+            .gallery-card {
+                margin-bottom: 10px;
             }
 
             .mobile-active-img {
@@ -788,8 +811,8 @@
     <nav>
         <div class="container nav-flex">
             <div class="logo">MASTERCLASS <span class="text-accent">BY NICK</span></div>
-            <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20masterclass"
-                class="btn-nav">
+            <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20Masterclass"
+                target="_blank" class="btn-nav">
                 RESERVE YOUR SEAT NOW <i class="fas fa-arrow-right" style="font-size:0.8em;"></i>
             </a>
         </div>
@@ -812,8 +835,8 @@
                 </p>
 
                 <div class="hero-actions reveal-up delay-300">
-                    <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20masterclass"
-                        class="btn-magnet">
+                    <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20Masterclass"
+                        target="_blank" class="btn-magnet">
                         SECURE YOUR SPOT
                     </a>
                     <div style="display: flex; align-items: center; color: #888;">
@@ -998,8 +1021,8 @@
     <footer id="join">
         <div class="container">
             <h2 class="reveal-up" style="font-size: 2.5rem; margin-bottom: 20px;">READY TO LEVEL UP?</h2>
-            <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20masterclass"
-                class="btn btn-whatsapp reveal-up">
+            <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20Masterclass"
+                target="_blank" class="btn btn-whatsapp reveal-up">
                 <i class="fab fa-whatsapp"></i> Apply via WhatsApp
             </a>
             <br>
