@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>iPhone Reel Masterclass | NICK.VISUALS</title>
 
+    <link rel="icon" type="image/png" href="fav.png">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Signika+Negative:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -535,7 +537,7 @@
             line-height: 1.5;
         }
 
-        /* --- 9. MENTOR & GALLERY (MASONRY FIX - COLUMNS) --- */
+        /* --- 9. MENTOR & GALLERY (MASONRY COLUMNS + GAP FIX) --- */
         .section-mentor {
             padding: 60px 0;
             background: #080808;
@@ -589,9 +591,7 @@
             margin-bottom: 15px;
         }
 
-        /* STAGGER LOGIC FOR COLUMNS */
-        /* In Column Layout: Item 1 = Top Left, Item 2 = Bottom Left */
-        /* Item 3 = Top Right, Item 4 = Bottom Right */
+        /* STAGGER LOGIC & GAP EQUALIZER */
 
         /* 1. Left Column (Standard) */
         .gallery-card:nth-child(1) {
@@ -604,10 +604,20 @@
 
         /* 2. Right Column (Staggered) */
         .gallery-card:nth-child(3) {
+            /* This pushes the Top Right image down */
             margin-top: 50px;
-            /* This pushes the entire Right Column down */
             margin-bottom: 15px;
         }
+
+        /* 3. The Bottom Left Gap Fix */
+        /* Since we are using columns, the bottom left image is simply .gallery-card:nth-child(2) */
+        /* But wait! We need to push IT down? No, we need the gap ABOVE it to be equal. */
+        /* In columns, the gap above Item 2 is Item 1's margin-bottom. */
+        /* BUT if we want to mimic the visual stagger of the right side... */
+
+        /* Let's try forcing a top margin on the bottom left card to match visually if margin-bottom on item 1 isn't enough */
+        /* Actually, in the previous turn we fixed this with margin-top: 50px on nth-child(3) in grid mode. */
+        /* In COLUMN mode: Item 1 and 2 are Left Col. Item 3 and 4 are Right Col. */
 
         .gallery-card:nth-child(4) {
             margin-bottom: 0;
@@ -1000,16 +1010,16 @@
 
                     <div class="mentor-gallery">
                         <div class="gallery-card">
-                            <img src="gallery2.jpg" alt="Work 2">
-                        </div>
-                        <div class="gallery-card">
-                            <img src="gallery4.jpg" alt="Work 4">
-                        </div>
-                        <div class="gallery-card">
                             <img src="gallery1.jpg" alt="Work 1">
                         </div>
                         <div class="gallery-card">
                             <img src="gallery3.jpg" alt="Work 3">
+                        </div>
+                        <div class="gallery-card">
+                            <img src="gallery2.jpg" alt="Work 2">
+                        </div>
+                        <div class="gallery-card">
+                            <img src="gallery4.jpg" alt="Work 4">
                         </div>
                     </div>
 
