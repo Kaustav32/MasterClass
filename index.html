@@ -461,7 +461,7 @@
             line-height: 1.4;
         }
 
-        /* --- 8. REVIEWS (RESTORED ALL 4) --- */
+        /* --- 8. REVIEWS (ALL 4 RESTORED) --- */
         .section-reviews {
             padding: 80px 0;
             background: linear-gradient(to bottom, #050505, #0a0a0a);
@@ -483,7 +483,6 @@
             border: 1px solid var(--glass-border);
             padding: 30px;
             border-radius: 16px;
-            /* Fix: Ensure height matches */
             height: 100%;
             transition: 0.3s;
             overflow: hidden;
@@ -637,7 +636,6 @@
         }
 
         /* === 9B. FULL WIDTH "BENTO" GALLERY === */
-        /* Moved out of the grid to span full width */
         .full-width-gallery-container {
             margin-top: 50px;
             width: 100%;
@@ -764,12 +762,15 @@
 
         @media (max-width: 900px) {
 
-            /* FIX 1: Prevent Text Overflow */
+            /* FIX 1: Increased Mobile Text Size & Safety */
             h1 {
-                font-size: clamp(2.5rem, 10vw, 3.5rem);
+                font-size: clamp(3.5rem, 12vw, 5rem);
+                /* Bigger and punchier */
                 margin-bottom: 15px;
-                word-break: break-word;
-                /* Ensure text breaks if too long */
+                word-break: normal;
+                overflow-wrap: break-word;
+                /* Ensure it stays in frame */
+                line-height: 0.95;
             }
 
             .hero {
@@ -1081,22 +1082,22 @@
                         <div class="elastic-card mobile-active" onclick="toggleMobileCard(this)">
                             <div class="card-overlay"></div>
                             <video src="sample1.mp4" autoplay muted loop playsinline></video>
-                            <div class="card-label">LIGHTING</div>
-                        </div>
-                        <div class="elastic-card" onclick="toggleMobileCard(this)">
-                            <div class="card-overlay"></div>
-                            <video src="sample2.mp4" autoplay muted loop playsinline></video>
                             <div class="card-label">FRAMING</div>
                         </div>
                         <div class="elastic-card" onclick="toggleMobileCard(this)">
                             <div class="card-overlay"></div>
+                            <video src="sample2.mp4" autoplay muted loop playsinline></video>
+                            <div class="card-label">LIGHTING</div>
+                        </div>
+                        <div class="elastic-card" onclick="toggleMobileCard(this)">
+                            <div class="card-overlay"></div>
                             <video src="sample3.mp4" autoplay muted loop playsinline></video>
-                            <div class="card-label">STABILITY</div>
+                            <div class="card-label">EDITING</div>
                         </div>
                         <div class="elastic-card" onclick="toggleMobileCard(this)">
                             <div class="card-overlay"></div>
                             <video src="sample4.mp4" autoplay muted loop playsinline></video>
-                            <div class="card-label">EDITING</div>
+                            <div class="card-label">STABILITY</div>
                         </div>
                     </div>
                 </div>
