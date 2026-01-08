@@ -483,6 +483,7 @@
             border: 1px solid var(--glass-border);
             padding: 30px;
             border-radius: 16px;
+            /* Fix: Ensure height matches */
             height: 100%;
             transition: 0.3s;
             overflow: hidden;
@@ -636,6 +637,7 @@
         }
 
         /* === 9B. FULL WIDTH "BENTO" GALLERY === */
+        /* Moved out of the grid to span full width */
         .full-width-gallery-container {
             margin-top: 50px;
             width: 100%;
@@ -764,12 +766,12 @@
 
             /* FIX 1: Increased Mobile Text Size & Safety */
             h1 {
-                font-size: clamp(3.5rem, 12vw, 5rem);
+                font-size: clamp(2.8rem, 12vw, 5rem);
                 /* Bigger and punchier */
                 margin-bottom: 15px;
                 word-break: normal;
                 overflow-wrap: break-word;
-                /* Ensure it stays in frame */
+                /* Ensure text breaks if too long */
                 line-height: 0.95;
             }
 
@@ -1092,7 +1094,7 @@
                         <div class="elastic-card" onclick="toggleMobileCard(this)">
                             <div class="card-overlay"></div>
                             <video src="sample3.mp4" autoplay muted loop playsinline></video>
-                            <div class="card-label">EDITING</div>
+                            <div class="card-label">FOCUS</div>
                         </div>
                         <div class="elastic-card" onclick="toggleMobileCard(this)">
                             <div class="card-overlay"></div>
