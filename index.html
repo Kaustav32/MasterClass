@@ -393,7 +393,6 @@
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9);
         }
 
-        /* UPDATED: Added selector for video to match iframe behavior */
         .video-box iframe,
         .video-box video {
             position: absolute;
@@ -402,7 +401,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Ensures video fills the box */
         }
 
         /* --- 7. BLUEPRINT --- */
@@ -1157,8 +1155,10 @@
             }
         }
 
-        // 5. Mobile Stills Glow Logic
+        // 5. Mobile Auto-Highlight Logic (Stills + Learn/Blueprint)
         if (window.matchMedia("(max-width: 900px)").matches) {
+
+            // A. Stills Gallery Logic
             const galleryCards = document.querySelectorAll('.stills-card');
             const galleryObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1172,6 +1172,21 @@
                 });
             }, { threshold: 0.6, rootMargin: "-10% 0px -10% 0px" });
             galleryCards.forEach(card => galleryObserver.observe(card));
+
+            // B. Learn Cards (Blueprint) Logic - RESTORED
+            const learnCards = document.querySelectorAll('.learn-card');
+            const learnObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.borderColor = "var(--accent)";
+                        entry.target.style.boxShadow = "0 10px 30px rgba(139, 92, 246, 0.1)"; // Added subtle glow
+                    } else {
+                        entry.target.style.borderColor = "var(--glass-border)";
+                        entry.target.style.boxShadow = "none";
+                    }
+                });
+            }, { threshold: 0.7, rootMargin: "0px -20% 0px -20%" }); // High threshold for center focus
+            learnCards.forEach(card => learnObserver.observe(card));
         }
     </script>
 
