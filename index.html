@@ -412,6 +412,8 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
             margin-top: 40px;
+            /* Fix: Prevent vertical scroll on swipe */
+            overflow-y: hidden;
         }
 
         .learn-card {
@@ -459,7 +461,7 @@
             line-height: 1.4;
         }
 
-        /* --- 8. REVIEWS --- */
+        /* --- 8. REVIEWS (RESTORED ALL 4) --- */
         .section-reviews {
             padding: 80px 0;
             background: linear-gradient(to bottom, #050505, #0a0a0a);
@@ -471,6 +473,8 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
             margin-top: 40px;
+            /* Fix: Prevent vertical scroll on swipe */
+            overflow-y: hidden;
         }
 
         .review-card {
@@ -479,8 +483,10 @@
             border: 1px solid var(--glass-border);
             padding: 30px;
             border-radius: 16px;
+            /* Fix: Ensure height matches */
             height: 100%;
             transition: 0.3s;
+            overflow: hidden;
         }
 
         .review-card:hover {
@@ -586,20 +592,20 @@
             transition: all 0.6s ease;
         }
 
+        /* FIX: Removed Rotation & Vertical Text */
         .card-label {
             position: absolute;
-            bottom: 25px;
-            left: 25px;
+            bottom: 20px;
+            left: 20px;
             z-index: 10;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
             font-family: 'Outfit', sans-serif;
             font-weight: 800;
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
             letter-spacing: 2px;
             pointer-events: none;
             transition: all 0.4s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .card-overlay {
@@ -623,20 +629,17 @@
         }
 
         .elastic-card:hover .card-label {
-            writing-mode: horizontal-tb;
-            transform: rotate(0deg);
             color: #fff;
-            bottom: 30px;
-            left: 30px;
         }
 
         .elastic-card:hover .card-overlay {
             opacity: 0.2;
         }
 
-        /* === 9B. FULL WIDTH "STRETCH" GALLERY (BENTO GRID) === */
-        .gallery-section-wrapper {
-            margin-top: 60px;
+        /* === 9B. FULL WIDTH "BENTO" GALLERY === */
+        /* Moved out of the grid to span full width */
+        .full-width-gallery-container {
+            margin-top: 50px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -646,11 +649,11 @@
         .stills-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            /* 4 Columns */
             gap: 12px;
-            /* STRETCH LOGIC */
-            width: 110%;
-            margin-left: -5%;
+            width: 100%;
             grid-auto-rows: 240px;
+            /* Fixed row height */
         }
 
         .stills-card {
@@ -682,7 +685,8 @@
             transform: scale(1.03);
         }
 
-        /* --- THE DESKTOP BENTO LAYOUT --- */
+        /* --- BENTO MOSAIC LAYOUT --- */
+        /* Row 1 */
         .stills-card:nth-child(1) {
             grid-column: span 2;
             grid-row: span 2;
@@ -694,31 +698,33 @@
             grid-row: span 1;
         }
 
-        /* Detail */
+        /* Top Right Detail */
         .stills-card:nth-child(3) {
             grid-column: span 1;
             grid-row: span 2;
         }
 
         /* Tall Right */
+        /* Row 2 */
         .stills-card:nth-child(4) {
             grid-column: span 1;
             grid-row: span 1;
         }
 
-        /* Detail */
+        /* Mid Right Detail */
+        /* Row 3 */
         .stills-card:nth-child(5) {
             grid-column: span 2;
             grid-row: span 1;
         }
 
-        /* Wide Bottom */
+        /* Wide Bottom Left */
         .stills-card:nth-child(6) {
             grid-column: span 2;
             grid-row: span 1;
         }
 
-        /* Wide Bottom */
+        /* Wide Bottom Right */
 
 
         /* --- 10. FOOTER --- */
@@ -741,7 +747,7 @@
         }
 
         /* =========================================
-           MOBILE OPTIMIZATIONS (BEST OF THE BEST)
+           MOBILE OPTIMIZATIONS (FIXED)
            ========================================= */
         @media (max-width: 1024px) {
             .mentor-grid {
@@ -751,22 +757,19 @@
 
             .mentor-img-container {
                 width: 100%;
-                margin: 0 auto 0px auto;
+                margin: 0 auto;
                 position: relative;
-                top: 0;
-            }
-
-            /* Tablet: Reset stretch to avoid overflow */
-            .stills-gallery {
-                width: 100%;
-                margin-left: 0;
             }
         }
 
         @media (max-width: 900px) {
+
+            /* FIX 1: Prevent Text Overflow */
             h1 {
-                font-size: 3.5rem;
+                font-size: clamp(2.5rem, 10vw, 3.5rem);
                 margin-bottom: 15px;
+                word-break: break-word;
+                /* Ensure text breaks if too long */
             }
 
             .hero {
@@ -794,10 +797,13 @@
                 padding: 60px 0;
             }
 
+            /* FIX 2: Better Swipe Area (No Vertical Scroll) */
             .learn-grid,
             .reviews-grid {
                 display: flex;
                 overflow-x: auto;
+                overflow-y: hidden;
+                /* Stop vertical scroll */
                 scroll-snap-type: x mandatory;
                 gap: 15px;
                 padding-bottom: 25px;
@@ -809,6 +815,8 @@
                 min-width: 85vw;
                 scroll-snap-align: center;
                 margin: 0;
+                overflow: hidden;
+                /* Prevent internal scroll */
             }
 
             /* MOBILE ELASTIC DECK */
@@ -822,14 +830,6 @@
                 width: 100%;
                 flex: 1;
                 transition: flex 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            }
-
-            .card-label {
-                writing-mode: horizontal-tb;
-                transform: rotate(0deg);
-                left: 20px;
-                bottom: 20px;
-                font-size: 1.2rem;
             }
 
             .elastic-card.mobile-active {
@@ -850,45 +850,32 @@
                 margin-bottom: 15px;
             }
 
-            /* MOBILE STILLS (FULL BLEED MOSAIC WALL) */
+            /* MOBILE STILLS (2 Columns) */
             .stills-gallery {
-                width: 100vw;
-                /* Full screen width */
-                margin-left: -20px;
-                /* Counteract padding */
                 grid-template-columns: 1fr 1fr;
-                /* 2 Cols */
-                gap: 8px;
-                /* Tighter gaps */
+                gap: 10px;
                 grid-auto-rows: 200px;
-                padding: 0;
             }
 
-            .stills-card {
-                border-radius: 0;
-                border: none;
-            }
-
-            /* Sharp edges for wall look */
-
-            /* Mobile Specific Layout */
+            /* Reset Spans for Mobile */
             .stills-card:nth-child(n) {
                 grid-column: span 1;
                 grid-row: span 1;
-                height: 200px;
             }
 
-            /* Big Hero Mobile */
+            /* Keep Feature Images */
             .stills-card:nth-child(1) {
                 grid-column: span 2;
                 height: 300px;
             }
 
-            /* Big Footer Mobile */
+            /* Hero Top */
             .stills-card:nth-child(6) {
                 grid-column: span 2;
-                height: 300px;
+                height: 250px;
             }
+
+            /* Feature Bottom */
 
             .mobile-active-img {
                 filter: grayscale(0%) !important;
@@ -933,12 +920,15 @@
         <div class="container hero-grid">
             <div class="hero-content">
                 <div class="hero-tag reveal-up">JAN 17 • 6-HOUR INTENSIVE</div>
+
                 <h1 class="reveal-up delay-100">IPHONE REEL<br>MASTERCLASS</h1>
                 <div class="sub-heading shimmer-text reveal-up delay-200">SHOOT & EDIT SCROLL STOPPERS</div>
+
                 <p class="hero-desc reveal-up delay-300">
                     A 1-day live & intensive masterclass. Learn how to create high-end, professional content using just
                     your iPhone.
                 </p>
+
                 <div class="hero-actions reveal-up delay-300">
                     <a href="https://wa.me/919310088163?text=Hi%20,%20I%20am%20interested%20in%20the%20Masterclass"
                         target="_blank" class="btn-magnet">
@@ -950,6 +940,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="video-box reveal-up delay-200">
                 <iframe src="https://www.youtube.com/embed/M78ormWF1ro?rel=0&modestbranding=1" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1111,7 +1102,7 @@
                 </div>
             </div>
 
-            <div class="gallery-section-wrapper reveal-up delay-200">
+            <div class="full-width-gallery-container reveal-up delay-200">
                 <h4
                     style="font-size: 0.9rem; color: var(--accent); margin-bottom: 25px; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; display: inline-block;">
                     RECENT WORK HIGHLIGHTS
