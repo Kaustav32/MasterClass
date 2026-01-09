@@ -367,6 +367,8 @@
             border: 1px solid var(--glass-border);
             color: var(--accent);
             letter-spacing: 1px;
+            /* Added glow for online status */
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
         }
 
         .hero-desc {
@@ -393,6 +395,7 @@
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9);
         }
 
+        /* --- REVERTED BACK TO COVER (As requested) --- */
         .video-box iframe,
         .video-box video {
             position: absolute;
@@ -401,6 +404,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            /* Fills the box completely */
         }
 
         /* --- 7. BLUEPRINT --- */
@@ -893,14 +897,18 @@
 
         <div class="container hero-grid">
             <div class="hero-content">
-                <div class="hero-tag reveal-up">JAN 17 • 6-HOUR INTENSIVE</div>
+
+                <div class="hero-tag reveal-up">
+                    <span style="color: #ef4444; margin-right:5px;">●</span> LIVE ONLINE CLASS • JAN 17
+                </div>
 
                 <h1 class="reveal-up delay-100">IPHONE REEL<br>MASTERCLASS</h1>
                 <div class="sub-heading shimmer-text reveal-up delay-200">SHOOT & EDIT SCROLL STOPPERS</div>
 
                 <p class="hero-desc reveal-up delay-300">
-                    A 1-day live & intensive masterclass. Learn how to create high-end, professional content using just
-                    your iPhone.
+                    A 1-day live & intensive <strong>online</strong> masterclass. Learn how to create high-end,
+                    professional content using just
+                    your iPhone. <strong>Join from anywhere.</strong>
                 </p>
 
                 <div class="hero-actions reveal-up delay-300">
@@ -1173,7 +1181,7 @@
             }, { threshold: 0.6, rootMargin: "-10% 0px -10% 0px" });
             galleryCards.forEach(card => galleryObserver.observe(card));
 
-            // B. Learn Cards (Blueprint) Logic - RESTORED
+            // B. Learn Cards (Blueprint) Logic
             const learnCards = document.querySelectorAll('.learn-card');
             const learnObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
